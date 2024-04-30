@@ -1,0 +1,234 @@
+<div class="container">
+  <div class="row pt-3">
+    <div class="col-6">
+      <h4>Employee Home</h4>
+    </div>
+    <div class="col-6 text-end">
+      <button class="btn btn-outline-success" (click)="openModel()">Add New</button>
+    </div>
+  </div>
+  @if (studentList.length !== 0) {
+
+  <div class="row">
+    @for (item of studentList; track $index) {
+      <table>
+        <tr>
+          <th>ID</th>
+          <th>FirstName</th>
+          <th>LastName</th>
+          <th>Gender</th>
+          <th>Age</th>
+          <th>Department</th>
+          <th>Salary <span>&#36;</span>
+          </th>
+          <th>Actions</th>
+        </tr>
+        <tr>
+          <td><p>{{item.pincode}}</p></td>
+          <td><div class="col-6">
+            <p appHighlight>{{ item.name }}</p>
+          </div></td>
+          <td><div>
+            {{item.mobileNo}}
+          </div></td>
+          <td><div>
+            {{item.state}}
+          </div></td>
+          <td><div>
+            {{item.address}}
+          </div></td>
+          <td> <div class="col-6">
+            <small>{{item.email}}</small>
+           </div></td>
+           <td>
+            {{item.city}}
+           </td>
+           <td>
+            <div class="col-6">
+              <button class="btn btn-sm btn-primary" (click)="onEdit(item)">Edit</button>
+              <button class="btn btn-sm btn-danger" (click)="onDelete(item)">Delet</button>
+            </div>
+           </td>
+        </tr>
+      </table>
+
+    }
+  </div>
+  } @else {
+    <div class="row">
+      <div class="col-12 p-4 text-center">
+        <p>No Record Found. Create New Record</p>
+      </div>
+    </div>
+  }
+
+</div>
+
+
+<div class="modal" id="myModal" #myModal>
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h4 class="modal-title">New Employee Details</h4>
+        <button type="button" class="btn-close" (click)="closeModel()"></button>
+      </div>
+      <div class="modal-body">
+        <div class="row">
+          <div class="col-4">
+            <label for="">ID</label>
+            <input type="text" [(ngModel)]="studentObj.pincode" class="form-control" placeholder="ID">
+          </div>
+          <div class="col-8">
+            <label for="">First Name</label>
+            <input type="text" [(ngModel)]="studentObj.name" class="form-control" placeholder="FirstName">
+          </div>
+        </div>
+        <div class="row">
+          <div class="col-6">
+            <label for="">Last Name</label>
+            <input type="text" [(ngModel)]="studentObj.mobileNo" class="form-control" placeholder="LastName">
+          </div>
+          <div class="col-6">
+            <label for="">Gender</label>
+            <input type="text" [(ngModel)]="studentObj.state" class="form-control" placeholder="Gender">
+          </div>
+          <div class="col-6">
+            <label for="">Age</label>
+            <input type="text" [(ngModel)]="studentObj.address" class="form-control" placeholder="Age">
+          </div>
+          <div class="col-6">
+            <label for="">Department</label>
+            <input type="text" [(ngModel)]="studentObj.email" class="form-control" placeholder="Department">
+          </div>
+        </div>
+        <div class="row">
+          <div class="col-4">
+            <label for="">Salary</label>
+            <input type="text" [(ngModel)]="studentObj.city" class="form-control" placeholder="Salary">
+          </div>
+
+
+        </div>
+
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-danger" (click)="closeModel()">Close</button>
+        @if (studentObj.id ==0) {
+          <button type="button" class="btn btn-primary" (click)="saveStudent()">Save Student</button>
+        } @else {
+          <button type="button" class="btn btn-success" (click)="updateStud()">Update Student</button>
+        }
+
+      </div>
+    </div>
+  </div>
+</div>
+<style>
+  table {
+    font-family: arial, sans-serif;
+    border-collapse: collapse;
+    width: 100%;
+  }
+
+  td, th {
+    border: 1px solid #dddddd;
+    text-align: left;
+    padding: 8px;
+  }/* Styles for the container */
+.container {
+  margin-top: 20px;
+}
+
+/* Styles for the header */
+h4 {
+  margin: 0;
+}
+
+/* Styles for the add new button */
+.btn-outline-success {
+  font-size: 1rem;
+}
+
+/* Styles for the table */
+table {
+  font-family: Arial, sans-serif;
+  border-collapse: collapse;
+  width: 100%;
+}
+.highlighted {
+  background-color: yellow;
+}
+th, td {
+  border: 1px solid #dddddd;
+  text-align: left;
+  padding: 8px;
+}
+
+th {
+  background-color: #f2f2f2;
+}
+
+/* Alternate row color */
+tr:nth-child(even) {
+  background-color: #f2f2f2;
+}
+
+/* Modal styles */
+.modal-dialog {
+  max-width: 500px;
+}
+
+.modal-title {
+  font-weight: bold;
+}
+
+/* Modal body styles */
+.modal-body input[type="text"] {
+  width: 100%;
+  padding: 8px;
+  margin-bottom: 10px;
+}
+span {
+  content: "\0024";
+}
+/* Modal footer styles */
+.modal-footer {
+  justify-content: flex-end;
+}
+
+/* Button styles */
+.btn-close {
+  border: none;
+  background: transparent;
+  font-size: 1.25rem;
+  font-weight: bold;
+  cursor: pointer;
+}
+
+.btn {
+  margin-right: 10px;
+}
+/* styles.css */
+.highlighted {
+  background-color: yellow;
+}
+
+
+
+  tr:nth-child(even) {
+    background-color: #dddddd;
+  }
+  </style>
+  <script>
+    // script.js
+const textElement = document.getElementById('highlightText');
+
+textElement.addEventListener('mouseenter', function() {
+  textElement.classList.add('highlighted');
+});
+
+textElement.addEventListener('mouseleave', function() {
+  textElement.classList.remove('highlighted');
+});
+
+  </script>
